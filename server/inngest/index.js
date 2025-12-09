@@ -1,14 +1,5 @@
 import { Inngest } from "inngest";
-import { PrismaClient } from "@prisma/client";
-
-// Lazy initialization of Prisma to avoid blocking exports
-let prisma;
-function getPrisma() {
-    if (!prisma) {
-        prisma = new PrismaClient();
-    }
-    return prisma;
-}
+import prisma from "../configs/prisma.js";
 
 // Create a client to send and receive events
 export const inngest = new Inngest({ id: "project-management" });
