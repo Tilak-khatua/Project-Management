@@ -16,9 +16,21 @@ neonConfig.webSocketConstructor = ws;
 
 const connectionString = `${process.env.DATABASE_URL}`;
 
-const adapter = new PrismaNeon({ connectionString });
-const prisma = global.prisma || new PrismaClient({ adapter });
+// For serverless environments, create a function that returns a Prisma instance
+export const getPrisma = () => {
+  if (global.prisma) {
+    return global.prisma;
+  }
+  
+  const adapter = new PrismaNeon({ connectionString });
+  const prisma = new PrismaClient({ adapter });
+  
+  if (process.env.NODE_ENV === 'development') {
+    global.prisma = prisma;
+  }
+  
+  return prisma;
+};
 
-if (process.env.NODE_ENV === 'development') global.prisma = prisma;
-
-export default prisma;
+// Export default for backward compatibility
+export default getPrisma();
