@@ -1,7 +1,14 @@
 import { Inngest } from "inngest";
 import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient();
+// Lazy initialization of Prisma to avoid blocking exports
+let prisma;
+function getPrisma() {
+    if (!prisma) {
+        prisma = new PrismaClient();
+    }
+    return prisma;
+}
 
 // Create a client to send and receive events
 export const inngest = new Inngest({ id: "project-management" });
@@ -12,7 +19,7 @@ const syncUserCreation = inngest.createFunction(
     {event: 'clerk/user.created'},
     async ({ event })=>{
         const {data} = event;
-        await prisma.user.create({
+        await getPrisma().user.create({
             data: {
                 id: data.id,
                 email: data?.email_addresses[0]?.email_address,
@@ -29,7 +36,7 @@ const syncUserDeletion = inngest.createFunction(
     {event: 'clerk/user.deleted' },
     async ({ event })=>{
         const {data} = event;
-        await prisma.user.delete({
+        await getPrisma().user.delete({
            where: {
             id: data.id,
            }
@@ -43,7 +50,7 @@ const syncUserUpdation = inngest.createFunction(
     {event: 'clerk/user.updated'},
     async ({ event })=>{
         const {data} = event;
-        await prisma.user.update({
+        await getPrisma().user.update({
             where: {
                 id: data.id
             },
