@@ -62,6 +62,7 @@ const syncWorkspaceCreation = inngest.createFunction(
     {id: 'sync-workspace-from-clerk'},
     {event: 'clerk/organization.created'},
     async ({event}) => {
+        const prisma = getPrisma();
         const {data} = event;
         await prisma.workspace.create({
             data: {
@@ -77,7 +78,7 @@ const syncWorkspaceCreation = inngest.createFunction(
         await prisma.workspaceMember.create({
             data: {
                 userId: data.created_by,
-                worksapceId: data.id,
+                workspaceId: data.id,
                 role: 'ADMIN'
             }
         })
@@ -85,10 +86,11 @@ const syncWorkspaceCreation = inngest.createFunction(
 )
 
 // Inngest function to update workspace data to a database
-const syncWorkspaceUpdation = inggest.createFunction(
+const syncWorkspaceUpdation = inngest.createFunction(
     {id: 'update-workspace-from-clerk'},
     { event: 'clerk/organization.updated'},
     async ({ event }) => {
+        const prisma = getPrisma();
         const {data} = event;
         await prisma.workspace.update({
             where: {
@@ -104,10 +106,11 @@ const syncWorkspaceUpdation = inggest.createFunction(
 )
 
 // Inngest function to update workspace data to a database
-const syncWorkspaceDeletion = inggest.createFunction(
+const syncWorkspaceDeletion = inngest.createFunction(
     {id: 'delete-workspace-from-clerk'},
     { event: 'clerk/organization.deleted'},
     async ({ event }) => {
+        const prisma = getPrisma();
         const {data} = event;
         await prisma.workspace.delete({
             where: {
@@ -119,10 +122,11 @@ const syncWorkspaceDeletion = inggest.createFunction(
 )
 
 // Inngest function to save workspace member data to a database
-const syncWorkspaceMemberCreation = inngest.createfunction(
+const syncWorkspaceMemberCreation = inngest.createFunction(
     { id: 'sync-workspace-member-from-clerk' },
     {event: 'clerk/organizationInvitation.accepted'},
     async ({event}) => {
+        const prisma = getPrisma();
         const { data } = event;
         await prisma.workspaceMember.create({
             data: {
