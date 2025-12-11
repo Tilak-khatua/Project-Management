@@ -7,7 +7,11 @@
             "config": {
                 "includeFiles": [
                     "prisma/**",
-                    "inngest/**"
+                    "inngest/**",
+                    "controllers/**",
+                    "routes/**",
+                    "middlewares/**",
+                    "configs/**"
                 ]
             }
         }
