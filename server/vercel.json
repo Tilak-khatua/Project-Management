@@ -3,17 +3,7 @@
     "builds": [
         {
             "src": "server.js",
-            "use": "@vercel/node",
-            "config": {
-                "includeFiles": [
-                    "prisma/**",
-                    "inngest/**",
-                    "controllers/**",
-                    "routes/**",
-                    "middlewares/**",
-                    "configs/**"
-                ]
-            }
+            "use": "@vercel/node"
         }
     ],
     "routes": [
