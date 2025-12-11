@@ -1,9 +1,11 @@
+import { getAuth } from '@clerk/express';
+
 export const protect = async (req, res, next) => {
     try {
-        const { userId } = await req.auth()
+        const { userId } = getAuth(req);
 
         if(!userId) {
-            return res.status(401).json({ mesage: "Unauthorized"})
+            return res.status(401).json({ message: "Unauthorized"})
         }
         return next()
     } catch (error) {
