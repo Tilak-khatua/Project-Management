@@ -42,13 +42,13 @@ export default function ProjectSettings({ project }) {
                     {/* Name */}
                     <div className="space-y-2">
                         <label className={labelClasses}>Project Name</label>
-                        <input value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className={inputClasses} required />
+                        <input name="project-name" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} autoComplete="off" className={inputClasses} required />
                     </div>
 
                     {/* Description */}
                     <div className="space-y-2">
                         <label className={labelClasses}>Description</label>
-                        <textarea value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} className={inputClasses + " h-24"} />
+                        <textarea name="project-description" value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} autoComplete="off" className={inputClasses + " h-24"} />
                     </div>
 
                     {/* Status & Priority */}
@@ -78,11 +78,11 @@ export default function ProjectSettings({ project }) {
                     <div className="space-y-4 grid grid-cols-2 gap-4">
                         <div className="space-y-2">
                             <label className={labelClasses}>Start Date</label>
-                            <input type="date" value={format(formData.start_date, "yyyy-MM-dd")} onChange={(e) => setFormData({ ...formData, start_date: new Date(e.target.value) })} className={inputClasses} />
+                            <input type="date" name="start-date" value={format(formData.start_date, "yyyy-MM-dd")} onChange={(e) => setFormData({ ...formData, start_date: new Date(e.target.value) })} autoComplete="off" className={inputClasses} />
                         </div>
                         <div className="space-y-2">
                             <label className={labelClasses}>End Date</label>
-                            <input type="date" value={format(formData.end_date, "yyyy-MM-dd")} onChange={(e) => setFormData({ ...formData, end_date: new Date(e.target.value) })} className={inputClasses} />
+                            <input type="date" name="end-date" value={format(formData.end_date, "yyyy-MM-dd")} onChange={(e) => setFormData({ ...formData, end_date: new Date(e.target.value) })} autoComplete="off" className={inputClasses} />
                         </div>
                     </div>
 
